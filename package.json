@@ -1,25 +1,7 @@
 {
-  "name": "@ckeditor/ckeditor5-build-classic",
-  "version": "11.1.1",
-  "description": "The classic editor build of CKEditor 5 – the best browser-based rich text editor.",
-  "keywords": [
-    "ckeditor5-build",
-    "ckeditor",
-    "ckeditor5",
-    "ckeditor 5",
-    "wysiwyg",
-    "rich text",
-    "editor",
-    "html",
-    "contentEditable",
-    "editing",
-    "operational transformation",
-    "ot",
-    "collaboration",
-    "collaborative",
-    "real-time",
-    "framework"
-  ],
+  "name": "@mitodl/ckeditor-custom-build",
+  "version": "0.0.1",
+  "description": "MIT Open Learning custom build of CKEditor5",
   "main": "./build/ckeditor.js",
   "files": [
     "build"
@@ -33,6 +15,7 @@
     "@ckeditor/ckeditor5-dev-webpack-plugin": "^7.0.0",
     "@ckeditor/ckeditor5-easy-image": "^10.0.3",
     "@ckeditor/ckeditor5-editor-classic": "^11.0.1",
+    "@ckeditor/ckeditor5-engine": "^11.0.0",
     "@ckeditor/ckeditor5-essentials": "^10.1.2",
     "@ckeditor/ckeditor5-heading": "^10.1.0",
     "@ckeditor/ckeditor5-image": "^11.0.0",
@@ -42,13 +25,25 @@
     "@ckeditor/ckeditor5-paragraph": "^10.0.3",
     "@ckeditor/ckeditor5-table": "^11.0.0",
     "@ckeditor/ckeditor5-theme-lark": "^11.1.0",
+    "@ckeditor/ckeditor5-ui": "^11.1.0",
     "@ckeditor/ckeditor5-upload": "^10.0.3",
+    "babel-eslint": "7.2.3",
+    "eslint": "4.2.0",
+    "eslint-config-google": "0.9.1",
+    "eslint-config-mitodl": "^0.0.4",
+    "eslint-plugin-babel": "4.1.1",
+    "eslint-plugin-flow-vars": "^0.5.0",
+    "eslint-plugin-flowtype": "2.35.0",
+    "eslint-plugin-mocha": "4.11.0",
+    "eslint-plugin-react": "7.1.0",
     "postcss-loader": "^3.0.0",
+    "prettier-eslint-cli": "^4.7.1",
     "raw-loader": "^0.5.1",
     "style-loader": "^0.23.0",
     "uglifyjs-webpack-plugin": "^1.2.7",
     "webpack": "^4.15.0",
-    "webpack-cli": "^3.0.8"
+    "webpack-cli": "^3.0.8",
+    "webpack-dev-server": "^3.1.10"
   },
   "engines": {
     "node": ">=6.9.0",
@@ -56,14 +51,18 @@
   },
   "author": "CKSource (http://cksource.com/)",
   "license": "GPL-2.0-or-later",
-  "homepage": "https://ckeditor.com",
-  "bugs": "https://github.com/ckeditor/ckeditor5-build-classic/issues",
+  "homepage": "https://github.com/mitodl/ckeditor-custom-build/",
+  "bugs": "https://github.com/mitodl/ckeditor-custom-build/issues",
   "repository": {
     "type": "git",
-    "url": "https://github.com/ckeditor/ckeditor5-build-classic.git"
+    "url": "https://github.com/mitodl/ckeditor-custom-build.git"
   },
   "scripts": {
     "build": "webpack --mode production",
-    "preversion": "npm run build; if [ -n \"$(git status src/ckeditor.js build/ --porcelain)\" ]; then git add -u src/ckeditor.js build/ && git commit -m 'Internal: Build.'; fi"
-  }
+    "fmt": "LOG_LEVEL= prettier-eslint --write --no-semi --ignore 'build' 'src/*.js'",
+    "fmt:check": "prettier-eslint --list-different --no-semi --ignore 'build' 'src/*.js'",
+    "lint": "eslint ./src",
+    "start": "webpack-dev-server -d --hot --config webpack.config.js --watch"
+  },
+  "dependencies": {}
 }

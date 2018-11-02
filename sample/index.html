@@ -1,41 +1,72 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-	<meta charset="utf-8">
-	<title>CKEditor 5 – classic editor build – development sample</title>
-	<style>
-		body {
-			max-width: 800px;
-			margin: 20px auto;
-		}
-	</style>
-</head>
-<body>
+  <head>
+    <meta charset="utf-8">
+    <title>CKEditor 5 – classic editor build – development sample</title>
+    <style>
+body {
+  max-width: 800px;
+  margin: 20px auto;
+}
+    </style>
+  </head>
+  <body>
+    <h1>Editor</h1>
 
-<h1>CKEditor 5 – classic editor build – development sample</h1>
+    <div id="editor">
+    </div>
 
-<div id="editor">
-	<h2>Sample</h2>
+    <h1>Read-Only Version</h1>
 
-	<p>This is an instance of the <a href="https://ckeditor.com/docs/ckeditor5/latest/builds/guides/overview.html#classic-editor">classic editor build</a>.</p>
+    <div id="read-only-editor" >
+    </div>
 
-	<figure class="image">
-		<img src="../tests/manual/sample.jpg" alt="Autumn fields" />
-	</figure>
+      <script src="http://localhost:8080/ckeditor.js"></script>
 
-	<p>You can use this sample to validate whether your <a href="https://ckeditor.com/docs/ckeditor5/latest/builds/guides/development/custom-builds.html">custom build</a> works fine.</p>
-</div>
+      <script>
 
-<script src="../build/ckeditor.js"></script>
-<script>
-	ClassicEditor.create( document.querySelector( '#editor' ) )
-		.then( editor => {
-			window.editor = editor;
-		} )
-		.catch( err => {
-			console.error( err.stack );
-		} );
-</script>
+        // for testing rehydration
+        // I just generated this manually in the editor and then
+        // saved the JSON
+        const initialData = '[{"name":"h2","attributes":{},"children":[{"text":"A Heading"}]},{"name":"figure","attributes":{"class":"media"},"children":[{"name":"oembed","attributes":{"url":"https://www.youtube.com/watch?v=RQnHdogtzjQ"},"children":[]}]},{"name":"p","attributes":{},"children":[{"text":"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris nulla odio, placerat a ex pulvinar, rutrum suscipit mi. Integer porttito"},{"name":"strong","attributes":{},"children":[{"text":"r, enim sit amet vulputate posuere, eros quam auctor neque, id viverra odio erat et justo. In blandit nisi purus. Integer vitae diam ultrices, lobortis elit at, cursus eros. Ut vestibulum elementum ligula. Aenean eget enim mi. Cras bibendum vel dolor in efficitur. Proin co"}]},{"text":"mmodo turpis nec nunc suscipit, a ultrices orci interdum. Sed hendrerit posuere blandit. Sed imperdiet quam ut dignissim sodales. Pellentesque fringilla purus vitae lobortis dictum."}]},{"name":"p","attributes":{},"children":[{"text":"Nulla efficitur egestas nulla, sit amet condimentum augue vulputate non. Mauris maximus et sapien at ultricies. Mauris viverra venenatis suscipit. Maecenas ac nulla libero. Sed vitae imperdiet magna. Donec vulputate nisi dolor, vitae convallis velit vestib"},{"name":"i","attributes":{},"children":[{"text":"ulum at. Proin in sollicitudin enim. Vivamus dui dolor, fermentum sit amet ultrices in, commodo ac libero. Mauris at lorem volutpat, effi"}]},{"text":"citur enim eu, posuere justo. Sed egestas elit eget nibh placerat, ut faucibus libero dignissim. Proin varius sagittis purus eget fermentum. Vestibulum ut placerat lacus, sit amet consectetur felis. Aliquam lobortis mauris ac vehicula rhoncus. Integer facilisis urna sit amet sapien volutpat finibus ac nec ipsum. Phasellus in enim orci. Aliquam viverra porta massa non cursus."}]},{"name":"h3","attributes":{},"children":[{"text":"Another HEading"}]},{"name":"p","attributes":{},"children":[{"text":"Vivamus varius consectetur blandit. Donec ullamcorper neque vel mattis consequat. Fusce egestas dui lectus. Sed dictum ligula non vestibulum aliquam. Quisque eu ex efficitur, egestas augue at, rhoncus neque. Donec vehicula nisi a lobortis elementum. Donec nec velit euismod, pulvinar eros quis, sollicitudin nisl."}]},{"name":"p","attributes":{},"children":[{"text":"Integer ac rhoncus augue. Quisque eget blandit erat. Cras finibus sit amet ex in tristique. Duis faucibus ex sit amet viverra lacinia. Cras vel justo et dui imperdiet mattis. Morbi vitae ligula sapien. In vel magna finibus, pharetra diam finibus, viverra felis. Sed malesuada mi elit, ut lacinia orci rutrum id. Etiam laoreet convallis arcu, maximus vehicula erat venenatis nec. Curabitur nisl augue, aliquam ac interdum in, viverra in erat."}]},{"name":"p","attributes":{},"children":[{"text":"Vivamus dui neque, egestas vehicula diam ut, dictum ultricies velit. Maecenas et pulvinar tellus. Fusce imperdiet ligula in dapibus dignissim. Aliquam lacinia urna purus, quis pellentesque ante gravida et. Fusce eu ipsum eget ligula tristique malesuada. Donec auctor sed tellus eu vehicula. In consectetur elit eu varius vehicula. Curabitur laoreet erat id ultrices sagittis. Sed luctus tempus libero, id efficitur urna suscipit sed. Suspendisse mattis risus a massa egestas dapibus. Integer hendrerit quam sit amet euismod pellentesque."}]}]';
 
-</body>
+        const editorContainer = document.querySelector("#editor")
+
+        ClassicEditor.create(JSON.parse(initialData))
+          .then(editor => {
+
+            editorContainer.appendChild(
+              editor.ui.view.toolbar.element
+            );
+
+            editorContainer.appendChild( editor.ui.view.editable.element );
+
+            editor.model.document.on("change:data", event => {
+
+              console.log(editor.getData())
+            })
+          })
+          .catch( err => {
+            console.error(err.stack);
+          });
+
+        const readOnlyContainer = document.querySelector("#read-only-editor")
+
+        ClassicEditor.create(JSON.parse(initialData))
+          .then(editor => {
+
+            readOnlyContainer.appendChild(editor.ui.view.editable.element);
+
+            editor.model.document.on("change:data", event => {
+              console.log(editor.getData())
+            })
+
+            editor.isReadOnly = true
+          })
+          .catch( err => {
+            console.error( err.stack );
+          });
+      </script>
+
+  </body>
 </html>
