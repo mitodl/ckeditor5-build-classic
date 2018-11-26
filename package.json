@@ -1,6 +1,6 @@
 {
   "name": "@mitodl/ckeditor-custom-build",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "MIT Open Learning custom build of CKEditor5",
   "main": "./build/ckeditor.js",
   "files": [
@@ -59,6 +59,7 @@
   },
   "scripts": {
     "prepublishOnly": "webpack --mode production",
+    "build": "webpack --mode production",
     "fmt": "LOG_LEVEL= prettier-eslint --write --no-semi --ignore 'build' 'src/*.js'",
     "fmt:check": "prettier-eslint --list-different --no-semi --ignore 'build' 'src/*.js'",
     "lint": "eslint ./src",
