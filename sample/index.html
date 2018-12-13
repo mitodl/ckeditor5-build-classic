@@ -32,7 +32,7 @@ body {
 
         const editorContainer = document.querySelector("#editor")
 
-        ClassicEditor.create(JSON.parse(initialData))
+        CustomEditor.create(JSON.parse(initialData))
           .then(editor => {
 
             editorContainer.appendChild(
@@ -52,7 +52,7 @@ body {
 
         const readOnlyContainer = document.querySelector("#read-only-editor")
 
-        ClassicEditor.create(JSON.parse(initialData))
+        CustomEditor.create(JSON.parse(initialData))
           .then(editor => {
 
             readOnlyContainer.appendChild(editor.ui.view.editable.element);

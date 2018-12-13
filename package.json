@@ -1,6 +1,6 @@
 {
   "name": "@mitodl/ckeditor-custom-build",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "MIT Open Learning custom build of CKEditor5",
   "main": "./build/ckeditor.js",
   "files": [
@@ -28,6 +28,7 @@
     "@ckeditor/ckeditor5-ui": "^11.1.0",
     "@ckeditor/ckeditor5-upload": "^10.0.3",
     "babel-eslint": "7.2.3",
+    "ckeditor5-emptyness": "https://github.com/alexeckermann/ckeditor5-emptyness",
     "eslint": "4.2.0",
     "eslint-config-google": "0.9.1",
     "eslint-config-mitodl": "^0.0.4",

@@ -15,7 +15,6 @@ import BlockQuote from "@ckeditor/ckeditor5-block-quote/src/blockquote"
 import EasyImage from "@ckeditor/ckeditor5-easy-image/src/easyimage"
 import Heading from "@ckeditor/ckeditor5-heading/src/heading"
 import Image from "@ckeditor/ckeditor5-image/src/image"
-import ImageCaption from "@ckeditor/ckeditor5-image/src/imagecaption"
 import ImageStyle from "@ckeditor/ckeditor5-image/src/imagestyle"
 import ImageToolbar from "@ckeditor/ckeditor5-image/src/imagetoolbar"
 import ImageUpload from "@ckeditor/ckeditor5-image/src/imageupload"
@@ -23,21 +22,20 @@ import Link from "@ckeditor/ckeditor5-link/src/link"
 import List from "@ckeditor/ckeditor5-list/src/list"
 import MediaEmbed from "@ckeditor/ckeditor5-media-embed/src/mediaembed"
 import Paragraph from "@ckeditor/ckeditor5-paragraph/src/paragraph"
-import Table from "@ckeditor/ckeditor5-table/src/table"
-import TableToolbar from "@ckeditor/ckeditor5-table/src/tabletoolbar"
+import Emptyness from "ckeditor5-emptyness/src/emptyness"
 
 // block toolbar setup
 import BlockToolbar from "@ckeditor/ckeditor5-ui/src/toolbar/block/blocktoolbar"
-import HeadingButtonsUI from "@ckeditor/ckeditor5-heading/src/headingbuttonsui"
 import ParagraphButtonUI from "@ckeditor/ckeditor5-paragraph/src/paragraphbuttonui"
 
 import JSONplugin from "./JSONDataProcessor"
 
-export default class ClassicEditor extends ClassicEditorBase {}
+export default class CustomEditor extends ClassicEditorBase {}
 
 // Plugins to include in the build.
-ClassicEditor.builtinPlugins = [
+CustomEditor.builtinPlugins = [
   Essentials,
+  Emptyness,
   UploadAdapter,
   Autoformat,
   Bold,
@@ -46,7 +44,6 @@ ClassicEditor.builtinPlugins = [
   EasyImage,
   Heading,
   Image,
-  ImageCaption,
   ImageStyle,
   ImageToolbar,
   ImageUpload,
@@ -54,48 +51,27 @@ ClassicEditor.builtinPlugins = [
   List,
   MediaEmbed,
   Paragraph,
-  Table,
-  TableToolbar,
   BlockToolbar,
   ParagraphButtonUI,
-  HeadingButtonsUI,
   JSONplugin
 ]
 
 // Editor configuration.
-ClassicEditor.defaultConfig = {
-  blockToolbar: [
-    "paragraph",
-    "heading1",
-    "heading2",
-    "heading3",
-    "|",
-    "bulletedList",
-    "numberedList",
-    "|",
-    "blockQuote",
-    "imageUpload"
-  ],
-  toolbar: {
+CustomEditor.defaultConfig = {
+  blockToolbar: ["paragraph", "mediaEmbed", "imageUpload"],
+  toolbar:      {
     items: [
+      "heading",
       "bold",
       "italic",
       "link",
       "bulletedList",
       "numberedList",
-      // "imageUpload",
-      "blockQuote",
-      "insertTable",
-      "mediaEmbed",
-      "undo",
-      "redo"
+      "blockQuote"
     ]
   },
   image: {
     toolbar: ["imageStyle:full", "imageStyle:side", "|", "imageTextAlternative"]
-  },
-  table: {
-    contentToolbar: ["tableColumn", "tableRow", "mergeTableCells"]
   },
   // This value must be kept in sync with the language defined in webpack.config.js.
   language: "en"
